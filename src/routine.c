@@ -6,7 +6,7 @@
 /*   By: emlicame <emlicame@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 15:50:08 by emlicame          #+#    #+#             */
-/*   Updated: 2023/02/04 18:50:16 by emlicame         ###   ########.fr       */
+/*   Updated: 2023/02/04 19:01:28 by emlicame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,9 @@ int	philo_eating(t_philo *philo)
 	ph_print_msg(philo, 2);
 	pthread_mutex_lock(&philo->data->mutex_meals);
 	philo->ph_last_meal = ph_get_time();
-	pthread_mutex_unlock(&philo->data->mutex_meals);
-	ph_usleep(philo->data->time_to_eat);
-	pthread_mutex_lock(&philo->data->mutex_meals);
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&philo->data->mutex_meals);
+	ph_usleep(philo->data->time_to_eat);
 	ph_mutex_unlock_fork(philo);
 	return (0);
 }

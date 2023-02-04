@@ -28,5 +28,5 @@ void	ph_usleep(long ms)
 
 	start = ph_get_time();
 	while ((ph_get_time() - start) < ms)
-		usleep(450);
+		usleep(200);
 }
