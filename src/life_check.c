@@ -6,7 +6,7 @@
 /*   By: emlicame <emlicame@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 17:38:49 by emlicame          #+#    #+#             */
-/*   Updated: 2023/02/03 19:50:04 by emlicame         ###   ########.fr       */
+/*   Updated: 2023/02/04 18:01:32 by emlicame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	death(t_data *data)
 	pthread_mutex_unlock(&data->mutex_life);
 }
 
-static bool	ph_kanteen(t_philo *philo, t_data	*data)
+static bool	ph_kanteen(t_philo *philo, t_data *data)
 {
 	int	i;
 	int	total_meals;
@@ -43,9 +43,12 @@ static bool	ph_kanteen(t_philo *philo, t_data	*data)
 		pthread_mutex_lock(&philo->data->mutex_meals);
 		if (philo[i].meals_eaten == data->num_meals)
 			total_meals++;
-		pthread_mutex_unlock(&philo->data->mutex_meals);
 		if (total_meals == data->num_philo)
+		{
+			pthread_mutex_unlock(&philo->data->mutex_meals);
 			return (death(data), TRUE);
+		}
+		pthread_mutex_unlock(&philo->data->mutex_meals);
 		i++;
 	}
 	return (FALSE);
@@ -54,8 +57,10 @@ static bool	ph_kanteen(t_philo *philo, t_data	*data)
 static bool	ph_hospital(t_philo *philo, t_data	*data)
 {
 	int	i;
+	int	total_meals;
 
 	i = 0;
+	total_meals = 0;
 	while (i < philo->data->num_philo)
 	{
 		pthread_mutex_lock(&philo->data->mutex_meals);
@@ -76,16 +81,14 @@ void	*ph_life(void *data_struct)
 {
 	t_data	*data;
 	t_philo	*philo;
-	int		count_meals;
 
 	data = data_struct;
 	philo = data->philo;
-	count_meals = 0;
 	while (1)
 	{
-		if (ph_hospital(philo, data))
-			return (NULL);
 		if (data->num_meals > 0 && ph_kanteen(philo, data))
+			return (NULL);
+		if (ph_hospital(philo, data))
 			return (NULL);
 	}
 	return (NULL);

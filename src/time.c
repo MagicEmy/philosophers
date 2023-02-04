@@ -17,11 +17,9 @@ long	ph_get_time(void)
 	struct timeval	time;
 	long			now;
 
-	if (gettimeofday(&time, NULL) == -1)
-		return (printf ("Error\n"), ERROR); // implement??
+	gettimeofday(&time, NULL);
 	now = (time.tv_sec * 1000) + (time.tv_usec / 1000);
 	return (now);
-	// return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
 void	ph_usleep(long ms)
@@ -30,6 +28,5 @@ void	ph_usleep(long ms)
 
 	start = ph_get_time();
 	while ((ph_get_time() - start) < ms)
-		usleep(200);
+		usleep(450);
 }
-// usleep(ms / 10);
