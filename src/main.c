@@ -6,7 +6,7 @@
 /*   By: emlicame <emlicame@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 14:51:03 by emanuela          #+#    #+#             */
-/*   Updated: 2023/02/04 18:18:01 by emlicame         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:27:04 by emlicame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,6 @@
 void	error(char *msg)
 {
 	printf("Error: %s\n", msg);
-}
-
-int	ph_threads_and_routine(t_data *data)
-{
-	if (ph_create_philo(data))
-		return (1);
-	if (ph_join_philo(data))
-		return (1);
-	return (0);
 }
 
 static int	ph_check_args(int argc, char **argv)
@@ -50,17 +41,15 @@ int	main(int argc, char **argv)
 		return (0);
 	data = ph_data_init(argc, argv);
 	if (!data)
-		return (free(data), 1);
+		return (1);
 	if (ph_mutex_init(data))
-		return (free(data), 1);
+		return (1);
 	if (ph_threads_and_routine(data))
-		return (free(data), ph_mutex_destroy(data), 1);
+		return (ph_mutex_destroy(data), 1);
 	if (ph_mutex_destroy(data))
-		return (free(data), 1);
+		return (1);
 	free (data->philo);
 	free (data->mutex);
 	free (data);
 	return (0);
 }
-
-// system ("leaks -q philo");

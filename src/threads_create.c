@@ -6,47 +6,11 @@
 /*   By: emlicame <emlicame@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:08:59 by emlicame          #+#    #+#             */
-/*   Updated: 2023/02/03 19:42:38 by emlicame         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:25:00 by emlicame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	ph_mutex_init(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->num_philo)
-	{
-		if (pthread_mutex_init(&data->mutex[i], NULL) != 0)
-			return (error(ERROR_MUTEX), 1);
-		i++;
-	}
-	if (pthread_mutex_init(&data->mutex_life, NULL) != 0)
-		return (error(ERROR_MUTEX), 1);
-	if (pthread_mutex_init(&data->mutex_meals, NULL) != 0)
-		return (error(ERROR_MUTEX), 1);
-	return (0);
-}
-
-int	ph_mutex_destroy(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->num_philo)
-	{
-		if (pthread_mutex_destroy(&data->mutex[i]) != 0)
-			return (error(ERROR_DESTROY), 1);
-		i++;
-	}
-	if (pthread_mutex_destroy(&data->mutex_life) != 0)
-		return (error(ERROR_DESTROY), 1);
-	if (pthread_mutex_destroy(&data->mutex_meals) != 0)
-		return (error(ERROR_DESTROY), 1);
-	return (0);
-}
 
 static void	ph_philo_init(t_data *data)
 {
@@ -98,5 +62,14 @@ int	ph_join_philo(t_data *data)
 			return (error("Error waiting for threads"), 1);
 		i++;
 	}
+	return (0);
+}
+
+int	ph_threads_and_routine(t_data *data)
+{
+	if (ph_create_philo(data))
+		return (1);
+	if (ph_join_philo(data))
+		return (1);
 	return (0);
 }

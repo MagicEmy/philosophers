@@ -6,7 +6,7 @@
 /*   By: emlicame <emlicame@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 14:41:32 by emanuela          #+#    #+#             */
-/*   Updated: 2023/02/04 17:47:08 by emlicame         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:17:32 by emlicame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ bool		check_life(t_data *data);
 void		ph_print_msg(t_philo *philo, int case_pr);
 
 //threads and mutex
+int			ph_threads_and_routine(t_data *data);
 int			ph_create_philo(t_data *data);
 int			ph_join_philo(t_data *data);
 int			ph_mutex_init(t_data *data);
