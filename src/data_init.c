@@ -6,7 +6,7 @@
 /*   By: emlicame <emlicame@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 11:28:29 by emlicame          #+#    #+#             */
-/*   Updated: 2023/02/06 15:20:38 by emlicame         ###   ########.fr       */
+/*   Updated: 2023/02/06 21:36:59 by emlicame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_data	*ph_data_init(int argc, char **argv)
 	if (argc == 6)
 		data->num_meals = ph_atol(argv[5]);
 	data->alive = TRUE;
-	data->philo = malloc(sizeof(t_philo) * data->num_philo + 1);
+	data->philo = malloc(sizeof(t_philo) * data->num_philo);
 	if (!data->philo)
 		return (error(ERROR_MALLOC), NULL);
 	data->mutex = malloc(sizeof(pthread_mutex_t) * data->num_philo);

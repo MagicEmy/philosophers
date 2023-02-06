@@ -6,7 +6,7 @@
 /*   By: emlicame <emlicame@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 14:51:03 by emanuela          #+#    #+#             */
-/*   Updated: 2023/02/06 15:27:04 by emlicame         ###   ########.fr       */
+/*   Updated: 2023/02/06 21:37:08 by emlicame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@ static int	ph_check_args(int argc, char **argv)
 	return (0);
 }
 
+static void	ph_free(t_data *data)
+{
+	free (data->philo);
+	free (data->mutex);
+	free (data);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data			*data;
@@ -36,20 +43,23 @@ int	main(int argc, char **argv)
 	data = NULL;
 	if (argc < 5 || argc > 6)
 		return (error("Wrong number of arguments"), 1);
-	usleep (500);
 	if (ph_check_args(argc, argv))
 		return (0);
 	data = ph_data_init(argc, argv);
 	if (!data)
 		return (1);
 	if (ph_mutex_init(data))
-		return (1);
+		return (ph_free(data), 1);
 	if (ph_threads_and_routine(data))
-		return (ph_mutex_destroy(data), 1);
+		return (ph_mutex_destroy(data), ph_free(data), 1);
 	if (ph_mutex_destroy(data))
-		return (1);
-	free (data->philo);
-	free (data->mutex);
-	free (data);
+		return (ph_free(data), 1);
+	ph_free(data);
 	return (0);
 }
+
+// void exitcheck()
+// {
+// 	system("leaks philo");
+// }
+// atexit(exitcheck);
