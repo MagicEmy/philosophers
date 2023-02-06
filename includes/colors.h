@@ -6,7 +6,7 @@
 /*   By: emlicame <emlicame@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 14:44:09 by emanuela          #+#    #+#             */
-/*   Updated: 2023/02/04 17:20:51 by emlicame         ###   ########.fr       */
+/*   Updated: 2023/02/06 21:51:04 by emlicame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define COLORS_H
 
 # define C_RESET	"\x1b[0m"
+
 # define C_LRED		"\x1b[38;2;255;128;128m"
 # define C_RED		"\x1b[38;2;255;0;0m"
 # define C_DRED		"\x1b[38;2;128;0;0m"
